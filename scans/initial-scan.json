@@ -1,0 +1,185 @@
+{
+  "banner": {
+    "description": "WordPress Security Scanner by the WPScan Team",
+    "version": "3.8.28",
+    "authors": [
+      "@_WPScan_",
+      "@ethicalhack3r",
+      "@erwan_lr",
+      "@firefart"
+    ],
+    "sponsor": "Sponsored by Automattic - https://automattic.com/"
+  },
+  "start_time": 1779205261,
+  "start_memory": 48304128,
+  "target_url": "http://host.docker.internal:8080/",
+  "target_ip": "192.168.65.254",
+  "effective_url": "http://host.docker.internal:8080/",
+  "interesting_findings": [
+    {
+      "url": "http://host.docker.internal:8080/",
+      "to_s": "Headers",
+      "type": "headers",
+      "found_by": "Headers (Passive Detection)",
+      "confidence": 100,
+      "confirmed_by": {
+
+      },
+      "references": {
+
+      },
+      "interesting_entries": [
+        "Server: Apache/2.4.67 (Debian)",
+        "X-Powered-By: PHP/8.3.31"
+      ]
+    },
+    {
+      "url": "http://host.docker.internal:8080/xmlrpc.php",
+      "to_s": "XML-RPC seems to be enabled: http://host.docker.internal:8080/xmlrpc.php",
+      "type": "xmlrpc",
+      "found_by": "Direct Access (Aggressive Detection)",
+      "confidence": 100,
+      "confirmed_by": {
+
+      },
+      "references": {
+        "url": [
+          "http://codex.wordpress.org/XML-RPC_Pingback_API"
+        ],
+        "metasploit": [
+          "auxiliary/scanner/http/wordpress_ghost_scanner",
+          "auxiliary/dos/http/wordpress_xmlrpc_dos",
+          "auxiliary/scanner/http/wordpress_xmlrpc_login",
+          "auxiliary/scanner/http/wordpress_pingback_access"
+        ]
+      },
+      "interesting_entries": [
+
+      ]
+    },
+    {
+      "url": "http://host.docker.internal:8080/readme.html",
+      "to_s": "WordPress readme found: http://host.docker.internal:8080/readme.html",
+      "type": "readme",
+      "found_by": "Direct Access (Aggressive Detection)",
+      "confidence": 100,
+      "confirmed_by": {
+
+      },
+      "references": {
+
+      },
+      "interesting_entries": [
+
+      ]
+    },
+    {
+      "url": "http://host.docker.internal:8080/wp-cron.php",
+      "to_s": "The external WP-Cron seems to be enabled: http://host.docker.internal:8080/wp-cron.php",
+      "type": "wp_cron",
+      "found_by": "Direct Access (Aggressive Detection)",
+      "confidence": 60,
+      "confirmed_by": {
+
+      },
+      "references": {
+        "url": [
+          "https://www.iplocation.net/defend-wordpress-from-ddos",
+          "https://github.com/wpscanteam/wpscan/issues/1299"
+        ]
+      },
+      "interesting_entries": [
+
+      ]
+    }
+  ],
+  "version": {
+    "number": "6.9.4",
+    "release_date": "2026-03-11",
+    "status": "latest",
+    "found_by": "Meta Generator (Passive Detection)",
+    "confidence": 100,
+    "interesting_entries": [
+      "http://host.docker.internal:8080/, Match: 'WordPress 6.9.4'"
+    ],
+    "confirmed_by": {
+      "Atom Generator (Aggressive Detection)": {
+        "confidence": 80,
+        "interesting_entries": [
+          "http://host.docker.internal:8080/?feed=atom, <generator uri=\"https://wordpress.org/\" version=\"6.9.4\">WordPress</generator>"
+        ]
+      }
+    },
+    "vulnerabilities": [
+
+    ]
+  },
+  "main_theme": null,
+  "plugins": {
+    "akismet": {
+      "slug": "akismet",
+      "location": "http://host.docker.internal:8080/wp-content/plugins/akismet/",
+      "latest_version": "5.6",
+      "last_updated": "2025-11-12T16:31:00.000Z",
+      "outdated": false,
+      "readme_url": false,
+      "directory_listing": false,
+      "error_log_url": null,
+      "found_by": "Known Locations (Aggressive Detection)",
+      "confidence": 80,
+      "interesting_entries": [
+        "http://host.docker.internal:8080/wp-content/plugins/akismet/, status: 403"
+      ],
+      "confirmed_by": {
+
+      },
+      "vulnerabilities": [
+
+      ],
+      "version": null
+    }
+  },
+  "themes": {
+
+  },
+  "timthumbs": {
+
+  },
+  "config_backups": {
+
+  },
+  "db_exports": {
+
+  },
+  "users": {
+    "admin": {
+      "id": 2,
+      "found_by": "Author Id Brute Forcing - Author Pattern (Aggressive Detection)",
+      "confidence": 100,
+      "interesting_entries": [
+
+      ],
+      "confirmed_by": {
+        "Login Error Messages (Aggressive Detection)": {
+          "confidence": 100,
+          "interesting_entries": [
+
+          ]
+        }
+      }
+    }
+  },
+  "vuln_api": {
+    "error": "No WPScan API Token given, as a result vulnerability data has not been output.\nYou can get a free API token with 25 daily requests by registering at https://wpscan.com/register"
+  },
+  "stop_time": 1779205553,
+  "elapsed": 291,
+  "requests_done": 122657,
+  "cached_requests": 10,
+  "data_sent": 37628001,
+  "data_sent_humanised": "35.885 MB",
+  "data_received": 17458830,
+  "data_received_humanised": "16.65 MB",
+  "used_memory": 420642816,
+  "used_memory_humanised": "401.156 MB"
+}
