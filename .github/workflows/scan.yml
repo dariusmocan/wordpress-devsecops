@@ -50,17 +50,40 @@ jobs:
             -p 8080:80 \
             wordpress:latest
 
-      - name: Wait for WordPress to be ready
+      - name: Wait for MySQL to be ready
         run: |
-          echo "Waiting for WordPress"
           for i in $(seq 1 40); do
-            if curl -sf --max-time 5 http://localhost:8080/ > /dev/null 2>&1; then
-              echo " WordPress is up (attempt $i)"
+            if docker exec wp-db mysqladmin ping -u wpuser -pwppass --silent 2>/dev/null; then
+              echo "MySQL ready"
               break
             fi
-            echo "  attempt $i/40 - sleeping 5s"
+            echo "attempt $i/40 - sleeping 3s"
+            sleep 3
+          done
+
+      - name: Wait for WordPress to be ready
+        run: |
+          for i in $(seq 1 40); do
+            if curl -sf --max-time 5 http://localhost:8080/wp-login.php | grep -q "user_login"; then
+              echo "WordPress ready"
+              break
+            fi
             sleep 5
           done
+
+      - name: Configure WordPress via WP-CLI
+        run: |
+          docker exec wp-site bash -c "
+            curl -o /usr/local/bin/wp https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar && \
+            chmod +x /usr/local/bin/wp && \
+            wp core install \
+              --url='http://localhost:8080' \
+              --title='Test Site' \
+              --admin_user='admin' \
+              --admin_password='password' \
+              --admin_email='test@example.com' \
+              --allow-root
+          "
 
       - name: Install WPScan
         run: |
