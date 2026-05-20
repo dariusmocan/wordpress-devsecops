@@ -98,6 +98,7 @@ jobs:
           mkdir -p scans
           wpscan \
             --url http://localhost:8080 \
+            --api-token ${{ secrets.WPSCAN_API_TOKEN }} \
             --enumerate u,vt,vp,cb,dbe \
             --plugins-detection aggressive \
             --format json \
@@ -293,7 +294,8 @@ jobs:
 
           wpscan \
             --url http://localhost:8080 \
-            --enumerate u,vp,vt \
+            --api-token ${{ secrets.WPSCAN_API_TOKEN }} \
+            --enumerate u,vt,vp,cb,dbe \
             --plugins-detection aggressive \
             --format json \
             --output scans/rescan.json \
