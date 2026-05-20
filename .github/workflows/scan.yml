@@ -48,7 +48,7 @@ jobs:
             -e WORDPRESS_DB_NAME=wordpress \
             -e WORDPRESS_DEBUG=1 \
             -p 8080:80 \
-            wordpress:latest
+            wordpress:6.5-php8.2-apache
 
       - name: Wait for MySQL to be ready
         run: |
