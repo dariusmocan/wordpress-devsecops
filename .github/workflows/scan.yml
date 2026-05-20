@@ -313,26 +313,35 @@ jobs:
           python3 << 'EOF'
           import json
 
-          def count_vulns(path):
-              try:
-                  with open(path) as f:
-                      data = json.load(f)
-
-                  count = 0
-
-                  for name, info in data.get("plugins", {}).items():
-                      count += len(info.get("vulnerabilities", []))
-
-                  return count
-
-              except Exception:
-                  return -1
-
-          before = count_vulns("scans/initial-scan.json")
-          after  = count_vulns("scans/rescan.json")
-
+          def count_all_vulns(path):
+            try:
+                with open(path) as f:
+                    data = json.load(f)
+        
+                total = 0
+        
+                # Core vulns
+                total += len(data.get("version", {}).get("vulnerabilities", []))
+        
+                # Plugin vulns
+                for _, info in data.get("plugins", {}).items():
+                    total += len(info.get("vulnerabilities", []))
+        
+                # Theme vulns
+                for _, info in data.get("themes", {}).items():
+                    total += len(info.get("vulnerabilities", []))
+        
+                return total
+        
+            except Exception as e:
+                print(e)
+                return -1
+        
+          before = count_all_vulns("scans/initial-scan.json")
+          after = count_all_vulns("scans/rescan.json")
+          
           print(f"Vulnerabilities before: {before}")
-          print(f"Vulnerabilities after: {after}")
+          print(f"Vulnerabilities after:  {after}")
 
           if after < before:
               print(f"Reduced by {before - after}")
