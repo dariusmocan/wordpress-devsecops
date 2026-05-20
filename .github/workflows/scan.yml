@@ -238,7 +238,7 @@ jobs:
             -e WORDPRESS_DB_PASSWORD=wppass \
             -e WORDPRESS_DB_NAME=wordpress \
             -p 8080:80 \
-            ghcr.io/${{ github.repository_owner }}/wordpress-hardened:hardened
+            ghcr.io/${{ github.repository }}/wordpress-hardened:hardened
 
       - name: Wait for hardened WP to be ready
         run: |
