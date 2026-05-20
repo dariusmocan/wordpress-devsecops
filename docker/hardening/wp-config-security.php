@@ -10,6 +10,8 @@ define('DISALLOW_FILE_MODS', true);
 // Force HTTPS for admin pages
 define('FORCE_SSL_ADMIN', true);
 
+define('DISABLE_WP_CRON',true);
+
 // Limit login attempts via cookie (not full rate-limiting but adds friction)
 define('AUTH_COOKIE_EXPIRATION', 3600);
 

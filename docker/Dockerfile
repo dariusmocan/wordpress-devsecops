@@ -7,7 +7,7 @@ LABEL org.opencontainers.image.description="Security-hardened WordPress image"
 LABEL org.opencontainers.image.vendor="Your Name"
 
 # 1. Update all OS packages and remove unnecessary tools 
-RUN apt-get update && apt-get upgrade -y && \
+RUN apt-get update && \
     apt-get remove -y \
         telnet \
         netcat-traditional && \

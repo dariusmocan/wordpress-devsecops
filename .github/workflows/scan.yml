@@ -92,6 +92,12 @@ jobs:
             libcurl4-openssl-dev zlib1g-dev
           sudo gem install wpscan --no-document
 
+      - name: Warm up RSS feed before scanning 
+        run: | 
+          curl -sf http://localhost:8080/?feed=rss2 > /dev/null 
+          curl -sf http://localhost:8080/ > /dev/null 
+          sleep 5 
+
       - name: Run WPScan (initial)
         id: wpscan
         run: |
@@ -287,6 +293,12 @@ jobs:
             zlib1g-dev
 
           sudo gem install wpscan --no-document
+
+      - name: Warm up RSS feed before scanning 
+        run: | 
+          curl -sf http://localhost:8080/?feed=rss2 > /dev/null 
+          curl -sf http://localhost:8080/ > /dev/null 
+          sleep 5    
 
       - name: Run WPScan (re-scan)
         run: |
