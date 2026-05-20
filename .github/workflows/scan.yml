@@ -237,25 +237,60 @@ jobs:
             -e WORDPRESS_DB_PASSWORD=wppass \
             -e WORDPRESS_DB_NAME=wordpress \
             -p 8080:80 \
-            ghcr.io/${{ env.IMAGE_NAME }}:hardened
+            ghcr.io/${{ github.repository_owner }}/wordpress-hardened:hardened
 
       - name: Wait for hardened WP to be ready
         run: |
+          echo "Waiting for hardened WordPress..."
+
           for i in $(seq 1 40); do
-            curl -sf http://localhost:8080/ > /dev/null 2>&1 && break
+            if curl -sf http://localhost:8080/ > /dev/null 2>&1; then
+              echo "Hardened WordPress is up"
+              break
+            fi
+
+            echo "Attempt $i/40..."
             sleep 5
           done
+
+      - name: Install WordPress automatically
+        run: |
+          echo "Installing WP-CLI inside hardened container..."
+
+          docker exec -u root wp-hardened bash -c "
+            apt-get update -qq &&
+            apt-get install -y curl less default-mysql-client &&
+            curl -O https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar &&
+            chmod +x wp-cli.phar &&
+            mv wp-cli.phar /usr/local/bin/wp
+          "
+
+          echo "Running WordPress installation..."
+
+          docker exec -u root wp-hardened wp core install \
+            --allow-root \
+            --url=http://localhost:8080 \
+            --title='Hardened DevSecOps Lab' \
+            --admin_user=admin \
+            --admin_password=changeme123 \
+            --admin_email=admin@example.local
 
       - name: Install WPScan
         run: |
           sudo apt-get update -qq
-          sudo apt-get install -y ruby-full build-essential \
-            libcurl4-openssl-dev zlib1g-dev
+
+          sudo apt-get install -y \
+            ruby-full \
+            build-essential \
+            libcurl4-openssl-dev \
+            zlib1g-dev
+
           sudo gem install wpscan --no-document
 
       - name: Run WPScan (re-scan)
         run: |
           mkdir -p scans
+
           wpscan \
             --url http://localhost:8080 \
             --enumerate u,vp,vt \
@@ -272,31 +307,39 @@ jobs:
       - name: Compare before/after
         run: |
           echo "## Re-scan Results (Hardened Image)" >> $GITHUB_STEP_SUMMARY
-          python3 - << 'EOF'
+
+          python3 << 'EOF'
           import json
 
           def count_vulns(path):
-            try:
-              with open(path) as f:
-                data = json.load(f)
-              count = 0
-              for name, info in data.get("plugins", {}).items():
-                count += len(info.get("vulnerabilities", []))
-              return count
-            except:
-              return -1
+              try:
+                  with open(path) as f:
+                      data = json.load(f)
+
+                  count = 0
+
+                  for name, info in data.get("plugins", {}).items():
+                      count += len(info.get("vulnerabilities", []))
+
+                  return count
+
+              except Exception:
+                  return -1
 
           before = count_vulns("scans/initial-scan.json")
           after  = count_vulns("scans/rescan.json")
 
           print(f"Vulnerabilities before: {before}")
-          print(f"Vulnerabilities after:  {after}")
+          print(f"Vulnerabilities after: {after}")
+
           if after < before:
-            print(f" Reduced by {before - after}")
+              print(f"Reduced by {before - after}")
+
           elif after == 0:
-            print(" Clean - no plugin vulnerabilities found")
+              print("Clean - no plugin vulnerabilities found")
+
           else:
-            print("  Review remaining findings")
+              print("Review remaining findings")
           EOF
 
       - name: Upload re-scan artifacts
