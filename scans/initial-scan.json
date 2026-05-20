@@ -10,8 +10,8 @@
     ],
     "sponsor": "Sponsored by Automattic - https://automattic.com/"
   },
-  "start_time": 1779205261,
-  "start_memory": 48304128,
+  "start_time": 1779304560,
+  "start_memory": 47902720,
   "target_url": "http://host.docker.internal:8080/",
   "target_ip": "192.168.65.254",
   "effective_url": "http://host.docker.internal:8080/",
@@ -116,28 +116,7 @@
   },
   "main_theme": null,
   "plugins": {
-    "akismet": {
-      "slug": "akismet",
-      "location": "http://host.docker.internal:8080/wp-content/plugins/akismet/",
-      "latest_version": "5.6",
-      "last_updated": "2025-11-12T16:31:00.000Z",
-      "outdated": false,
-      "readme_url": false,
-      "directory_listing": false,
-      "error_log_url": null,
-      "found_by": "Known Locations (Aggressive Detection)",
-      "confidence": 80,
-      "interesting_entries": [
-        "http://host.docker.internal:8080/wp-content/plugins/akismet/, status: 403"
-      ],
-      "confirmed_by": {
 
-      },
-      "vulnerabilities": [
-
-      ],
-      "version": null
-    }
   },
   "themes": {
 
@@ -172,14 +151,14 @@
   "vuln_api": {
     "error": "No WPScan API Token given, as a result vulnerability data has not been output.\nYou can get a free API token with 25 daily requests by registering at https://wpscan.com/register"
   },
-  "stop_time": 1779205553,
-  "elapsed": 291,
-  "requests_done": 122657,
-  "cached_requests": 10,
-  "data_sent": 37628001,
-  "data_sent_humanised": "35.885 MB",
-  "data_received": 17458830,
-  "data_received_humanised": "16.65 MB",
-  "used_memory": 420642816,
-  "used_memory_humanised": "401.156 MB"
+  "stop_time": 1779304574,
+  "elapsed": 14,
+  "requests_done": 10836,
+  "cached_requests": 8,
+  "data_sent": 3322733,
+  "data_sent_humanised": "3.169 MB",
+  "data_received": 1788649,
+  "data_received_humanised": "1.706 MB",
+  "used_memory": 336207872,
+  "used_memory_humanised": "320.633 MB"
 }

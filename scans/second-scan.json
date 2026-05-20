@@ -1,0 +1,119 @@
+{
+  "banner": {
+    "description": "WordPress Security Scanner by the WPScan Team",
+    "version": "3.8.28",
+    "authors": [
+      "@_WPScan_",
+      "@ethicalhack3r",
+      "@erwan_lr",
+      "@firefart"
+    ],
+    "sponsor": "Sponsored by Automattic - https://automattic.com/"
+  },
+  "start_time": 1779305081,
+  "start_memory": 47665152,
+  "target_url": "http://host.docker.internal:8080/",
+  "target_ip": "192.168.65.254",
+  "effective_url": "http://host.docker.internal:8080/",
+  "interesting_findings": [
+    {
+      "url": "http://host.docker.internal:8080/",
+      "to_s": "Headers",
+      "type": "headers",
+      "found_by": "Headers (Passive Detection)",
+      "confidence": 100,
+      "confirmed_by": {
+
+      },
+      "references": {
+
+      },
+      "interesting_entries": [
+        "Server: Apache/2.4.59 (Debian)",
+        "Referrer-Policy: strict-origin-when-cross-origin"
+      ]
+    },
+    {
+      "url": "http://host.docker.internal:8080/wp-cron.php",
+      "to_s": "The external WP-Cron seems to be enabled: http://host.docker.internal:8080/wp-cron.php",
+      "type": "wp_cron",
+      "found_by": "Direct Access (Aggressive Detection)",
+      "confidence": 60,
+      "confirmed_by": {
+
+      },
+      "references": {
+        "url": [
+          "https://www.iplocation.net/defend-wordpress-from-ddos",
+          "https://github.com/wpscanteam/wpscan/issues/1299"
+        ]
+      },
+      "interesting_entries": [
+
+      ]
+    }
+  ],
+  "version": {
+    "number": "6.5.5",
+    "release_date": "2024-06-24",
+    "status": "insecure",
+    "found_by": "Emoji Settings (Passive Detection)",
+    "confidence": 100,
+    "interesting_entries": [
+      "http://host.docker.internal:8080/, Match: 'wp-includes\\/js\\/wp-emoji-release.min.js?ver=6.5.5'"
+    ],
+    "confirmed_by": {
+      "Meta Generator (Passive Detection)": {
+        "confidence": 60,
+        "interesting_entries": [
+          "http://host.docker.internal:8080/, Match: 'WordPress 6.5.5'"
+        ]
+      }
+    },
+    "vulnerabilities": [
+
+    ]
+  },
+  "main_theme": null,
+  "plugins": {
+
+  },
+  "themes": {
+
+  },
+  "timthumbs": {
+
+  },
+  "config_backups": {
+
+  },
+  "db_exports": {
+
+  },
+  "users": {
+    "admin": {
+      "id": 1,
+      "found_by": "Author Id Brute Forcing - Author Pattern (Aggressive Detection)",
+      "confidence": 100,
+      "interesting_entries": [
+
+      ],
+      "confirmed_by": {
+
+      }
+    }
+  },
+  "vuln_api": {
+    "error": "No WPScan API Token given, as a result vulnerability data has not been output.\nYou can get a free API token with 25 daily requests by registering at https://wpscan.com/register"
+  },
+  "stop_time": 1779305124,
+  "elapsed": 43,
+  "requests_done": 10841,
+  "cached_requests": 4,
+  "data_sent": 2771658,
+  "data_sent_humanised": "2.643 MB",
+  "data_received": 3416520,
+  "data_received_humanised": "3.258 MB",
+  "used_memory": 371257344,
+  "used_memory_humanised": "354.059 MB"
+}
